@@ -30,7 +30,7 @@ class Character extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function matches()
+    public function contests()
     {
         return $this->belongsToMany(Contest::class)->withPivot('hero_hp', 'enemy_hp');
     }
