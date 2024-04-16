@@ -17,8 +17,8 @@ class ContestFactory extends Factory
     public function definition(): array
     {
         return [
-            'win' => fake() -> boolean(),
-            'history' => fake() -> paragraph(),
+            'win' => fake()->boolean(),
+            'history' => fake()->paragraph(),
         ];
     }
 }
