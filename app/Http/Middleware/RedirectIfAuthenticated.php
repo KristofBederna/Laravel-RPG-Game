@@ -11,8 +11,7 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            // If user is authenticated, redirect them to their dashboard or any other authenticated route
-            return redirect('/dashboard');
+            return redirect('/characters');
         }
 
         return $next($request);
