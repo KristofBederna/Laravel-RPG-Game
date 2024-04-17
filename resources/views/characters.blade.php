@@ -28,7 +28,7 @@
                         <td>{{ $character->strength }}</td>
                         <td>{{ $character->accuracy }}</td>
                         <td>{{ $character->magic }}</td>
-                        <td><a href="{{ route('characters.show', ['characterId' => $character->id, 'userId' => $character->user_id]) }}">View Details</a></td>
+                        <td><a href="{{ route('characters.show', ['character' => $character->id, 'userId' => $character->user_id]) }}">Details</a></td>
                     </tr>
                 @endforeach
             </tbody>
