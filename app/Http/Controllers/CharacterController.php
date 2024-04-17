@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Character;
 use App\Models\Contest;
+use App\Models\Place;
 
 class CharacterController extends Controller
 {
@@ -100,5 +101,25 @@ class CharacterController extends Controller
         ]);
 
         return redirect()->route('characters');
+    }
+
+    public function storeMatch(Character $character)
+    {
+        $location = Place::inRandomOrder()->first();
+        $opponentCharacter = Character::where('id', '!=', $character->id)->inRandomOrder()->first();
+        $opponent = $opponentCharacter->name;
+        $history = $location->name . " vs. " . $opponent;
+
+        $contest = Contest::create([
+            'win' => true,
+            'history' => $history,
+            'user_id' => auth()->user()->id,
+            'place_id' => $location->id,
+        ]);
+
+        $contest->characters()->attach([$character->id => ['enemy_hp' => 100, 'hero_hp' => 100], $opponentCharacter->id => ['enemy_hp' => 100, 'hero_hp' => 100]]);
+
+
+        return redirect()->route('contests.show', ['id' => $contest->id, 'character' => $character->id]);
     }
 }

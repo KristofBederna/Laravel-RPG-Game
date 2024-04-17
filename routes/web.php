@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CharacterController;
 use App\Http\Controllers\ContestController;
+use App\Http\Controllers\PlaceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,4 +44,13 @@ Route::delete('/characters/{character}', [CharacterController::class, 'destroy']
 
 Route::post('/characters', [CharacterController::class, 'store'])->name('characters.store');
 
+Route::post('/characters/{character}/matches/create', [CharacterController::class, 'storeMatch'])->name('characters.matches.store');
+
+
+Route::get('/places', [PlaceController::class, 'index'])->name('places');
+Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
+Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
+Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('places.edit');
+Route::put('/places/{place}', [PlaceController::class, 'update'])->name('places.update');
+Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
 

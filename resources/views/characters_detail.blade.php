@@ -26,7 +26,6 @@
         @endforeach
     </ul>
 
-    <!-- Buttons for edit, delete, and new match -->
     <div>
 <form style="display: inline-block;" action="{{ route('characters.edit', ['character' => $character->id, 'userId' => $character->user_id]) }}" method="GET">
     <button type="submit">Edit</button>
@@ -37,9 +36,11 @@
             @method('DELETE')
             <button type="submit">Delete</button>
         </form>
-        <form style="display: inline-block;" action="{{ route('characters.matches.create', $character->id) }}">
-            <button type="submit">New Match</button>
-        </form>
+        <form style="display: inline-block;" method="POST" action="{{ route('characters.matches.store', $character->id) }}">
+    @csrf
+    <button type="submit">New Match</button>
+</form>
+
     </div>
 </body>
 </html>
