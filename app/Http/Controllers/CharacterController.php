@@ -16,7 +16,7 @@ class CharacterController extends Controller
             $userId = auth()->id();
 
             // Fetch the characters belonging to the authenticated user
-            $characters = Character::where('user_id', $userId)->get();
+            $characters = Character::get();
 
             // Pass the characters to the view
             return view('characters', compact('characters'));
@@ -49,6 +49,11 @@ class CharacterController extends Controller
         $character->strength = $request->input('strength');
         $character->accuracy = $request->input('accuracy');
         $character->magic = $request->input('magic');
+        if ($request->input('enemy')) {
+            $character->enemy = 0;
+        } else {
+            $character->enemy = 1;
+        }
 
         $character->save();
 

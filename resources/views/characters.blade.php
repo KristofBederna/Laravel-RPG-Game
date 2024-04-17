@@ -6,10 +6,7 @@
     <title>List of Characters</title>
 </head>
 <body>
-    <h1>List of Characters</h1>
-
-    @if (!is_null($characters) && !$characters->isEmpty())
-        <table>
+<table>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -21,7 +18,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($characters as $character)
+    <h1>List of Characters</h1>
+    @if(auth()->user()->admin == 1)
+            @foreach ($characters as $character)
+            @if($character->enemy == 1)
                     <tr>
                         <td>{{ $character->name }}</td>
                         <td>{{ $character->defence }}</td>
@@ -30,11 +30,26 @@
                         <td>{{ $character->magic }}</td>
                         <td><a href="{{ route('characters.show', ['character' => $character->id, 'userId' => $character->user_id]) }}">Details</a></td>
                     </tr>
+                    @endif
                 @endforeach
-            </tbody>
-        </table>
+                @endif
+    @if (!is_null($characters) && !$characters->isEmpty())
+                @foreach ($characters as $character)
+                @if(auth()->user()->id == $character->user_id)
+                    <tr>
+                        <td>{{ $character->name }}</td>
+                        <td>{{ $character->defence }}</td>
+                        <td>{{ $character->strength }}</td>
+                        <td>{{ $character->accuracy }}</td>
+                        <td>{{ $character->magic }}</td>
+                        <td><a href="{{ route('characters.show', ['character' => $character->id, 'userId' => $character->user_id]) }}">Details</a></td>
+                    </tr>
+                    @endif
+                @endforeach
     @else
         <p>No characters found.</p>
     @endif
+    </tbody>
+        </table>
 </body>
 </html>

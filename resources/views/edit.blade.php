@@ -3,7 +3,6 @@
     @csrf
     @method('PUT')
 
-    <!-- Add form fields to edit character details -->
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" value="{{ $character->name }}" required>
 
