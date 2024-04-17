@@ -28,8 +28,6 @@ Route::get('/characters/{character}/{userId}', [CharacterController::class, 'sho
 Route::get('/contests/{id}', 'ContestController@show')->name('contests.show');
 
 Route::middleware(['auth', 'can:accessCharacter,character'])->group(function () {
-    Route::get('/characters/{character}/edit', 'CharacterController@edit')->name('characters.edit');
-    Route::delete('/characters/{character}', 'CharacterController@destroy')->name('characters.destroy');
     Route::get('/characters/{character}/matches/create', 'CharacterController@createMatch')->name('characters.matches.create');
 });
 
@@ -37,7 +35,11 @@ Route::middleware(['auth', 'can:accessCharacter,character'])->group(function () 
     Route::put('/characters/{character}', 'CharacterController@update')->name('characters.update');
 });
 
-Route::get('/contests/{id}', [ContestController::class, 'show'])->name('contests.show');
+Route::get('/contests/{id}/{character}', [ContestController::class, 'show'])->name('contests.show');
+Route::get('/characters/{character}/{userId}/edit', [CharacterController::class, 'edit'])->name('characters.edit');
+Route::put('/characters/{character}/{userId}', [CharacterController::class, 'update'])->name('characters.update');
+Route::delete('/characters/{character}', [CharacterController::class, 'destroy'])->name('characters.destroy');
+
 
 
 

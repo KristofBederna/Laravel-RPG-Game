@@ -14,7 +14,6 @@ class CharacterController extends Controller
         if (auth()->check()) {
             // Fetch the authenticated user's ID
             $userId = auth()->id();
-            dump($userId);
 
             // Fetch the characters belonging to the authenticated user
             $characters = Character::where('user_id', $userId)->get();
@@ -34,26 +33,35 @@ class CharacterController extends Controller
         return view('characters_detail', ['character' => $character, 'contests' => $contests]);
     }
 
-    public function edit(Character $character)
+    public function edit(int $characterId)
     {
-        // Check if the current user is authorized to edit the character
-        if (auth()->id() !== $character->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        $character = Character::get()->where('id', $characterId)->first();
 
-        return view('characters.edit', compact('character'));
+        return view('edit', compact('character'));
     }
 
-    public function destroy(Character $character)
+    public function update(Request $request, $id)
     {
-        // Check if the current user is authorized to delete the character
-        if (auth()->id() !== $character->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        $character = Character::findOrFail($id);
+
+        $character->name = $request->input('name');
+        $character->defence = $request->input('defence');
+        $character->strength = $request->input('strength');
+        $character->accuracy = $request->input('accuracy');
+        $character->magic = $request->input('magic');
+
+        $character->save();
+
+        return redirect()->route('characters.show', ['character' => $character->id, 'userId' => $character->user_id]);
+    }
+
+    public function destroy($id)
+    {
+        $character = Character::findOrFail($id);
 
         $character->delete();
 
-        // Redirect to a suitable route after deletion
+        return redirect()->route('characters');
     }
 
     public function createMatch(Character $character)

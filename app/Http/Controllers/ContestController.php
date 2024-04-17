@@ -6,10 +6,10 @@ use App\Models\Contest;
 
 class ContestController extends Controller
 {
-    public function show($id)
+    public function show($id, $character)
     {
         $contest = Contest::findOrFail($id);
-        return view('create_contest', compact('contest'));
+        return view('contest_detail', compact('contest', 'character'));
     }
 
 }
