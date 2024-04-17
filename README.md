@@ -12,3 +12,4 @@
 [ ] - Új helyszín létrehozása 2 pont
 [ ] - Helyszín módosítása 3 pont
 [ ] - Helyszín törlése 2 pont
+16/46
