@@ -41,6 +41,6 @@ Route::put('/characters/{character}/{userId}', [CharacterController::class, 'upd
 Route::delete('/characters/{character}', [CharacterController::class, 'destroy'])->name('characters.destroy');
 
 
-
+Route::post('/characters', [CharacterController::class, 'store'])->name('characters.store');
 
 

@@ -73,4 +73,32 @@ class CharacterController extends Controller
     {
         // Implement logic to start a new match
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'defence' => 'required|numeric|min:0|max:10',
+            'strength' => 'required|numeric|min:0|max:10',
+            'accuracy' => 'required|numeric|min:0|max:10',
+            'magic' => 'required|numeric|min:0|max:10',
+            'enemy' => 'boolean',
+        ]);
+
+        if ($validatedData['defence'] + $validatedData['strength'] + $validatedData['accuracy'] + $validatedData['magic'] !== 20) {
+            return back()->withInput()->withErrors(['sum' => 'The sum of defence, strength, accuracy, and magic must be equal to 20.']);
+        }
+
+        Character::create([
+            'name' => $validatedData['name'],
+            'defence' => $validatedData['defence'],
+            'strength' => $validatedData['strength'],
+            'accuracy' => $validatedData['accuracy'],
+            'magic' => $validatedData['magic'],
+            'enemy' => $request->input('enemy', false),
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()->route('characters');
+    }
 }

@@ -3,7 +3,7 @@
 [x] - Főoldal 2 pont
 [x] - Karakterek listázása oldal 2 pont
 [x] - Karakter részletes adatai tartalmazó oldal 2 pont
-[ ] - Új karakter létrehozása 6 pont
+[x] - Új karakter létrehozása 6 pont
 [x] - Karakter módosítása 4 pont
 [x] - Karakter törlése 2 pont
 [ ] - Új mérkőzés létrehozása 3 pont
@@ -12,4 +12,4 @@
 [ ] - Új helyszín létrehozása 2 pont
 [ ] - Helyszín módosítása 3 pont
 [ ] - Helyszín törlése 2 pont
-16/46
+22/46

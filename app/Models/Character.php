@@ -22,6 +22,7 @@ class Character extends Model
         'strength',
         'accuracy',
         'magic',
+        'user_id',
         //a képességpontok (defence, strength, accuracy, magic) összege nem haladhatja meg a 20-at
     ];
 

@@ -50,6 +50,32 @@
         <p>No characters found.</p>
     @endif
     </tbody>
-        </table>
+    </table>
+    <h2>Create New Character</h2>
+    <form method="POST" action="{{ route('characters.store') }}">
+        @csrf
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="defence">Defence:</label>
+        <input type="number" id="defence" name="defence" required>
+
+        <label for="strength">Strength:</label>
+        <input type="number" id="strength" name="strength" required>
+
+        <label for="accuracy">Accuracy:</label>
+        <input type="number" id="accuracy" name="accuracy" required>
+
+        <label for="magic">Magical Ability:</label>
+        <input type="number" id="magic" name="magic" required>
+
+        @if (auth()->user()->admin == 1)
+            <label for="enemy">Enemy:</label>
+            <input type="checkbox" id="enemy" name="enemy" value="1">
+        @endif
+
+        <button type="submit">Create Character</button>
+    </form>
 </body>
 </html>
