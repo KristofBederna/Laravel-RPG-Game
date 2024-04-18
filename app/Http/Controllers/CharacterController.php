@@ -11,18 +11,11 @@ class CharacterController extends Controller
 {
     public function index()
     {
-        // Check if the user is authenticated
         if (auth()->check()) {
-            // Fetch the authenticated user's ID
             $userId = auth()->id();
-
-            // Fetch the characters belonging to the authenticated user
             $characters = Character::get();
-
-            // Pass the characters to the view
             return view('characters', compact('characters'));
         } else {
-            // User is not authenticated
             dd('User is not authenticated.');
         }
     }
@@ -70,11 +63,6 @@ class CharacterController extends Controller
         return redirect()->route('characters');
     }
 
-    public function createMatch(Character $character)
-    {
-        // Implement logic to start a new match
-    }
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -111,7 +99,7 @@ class CharacterController extends Controller
         $history = $location->name . " vs. " . $opponent;
 
         $contest = Contest::create([
-            'win' => true,
+            'win' => null,
             'history' => $history,
             'user_id' => auth()->user()->id,
             'place_id' => $location->id,

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin felhasználó létrehozása
         User::factory()->create([
             'name' => 'Admin',
             'email' => fake()->unique()->safeEmail,
@@ -25,29 +24,39 @@ class DatabaseSeeder extends Seeder
 
         User::factory(3)->create();
 
-        // Helyszínek létrehozása
         $places = Place::factory(3)->create();
 
-        // Karakterek létrehozása
         $characters = Character::factory(5)->create(['enemy' => false]);
         $enemyCharacters = Character::factory(3)->create(['enemy' => true]);
 
-        // Versenyek létrehozása
         foreach ($places as $place) {
             $contest = Contest::factory()->create([
+                'win' => fake()->randomElement([null, 1]),
                 'place_id' => $place->id,
-                'user_id' => User::where('admin', true)->first()->id, // Admin felhasználó id-ja
+                'user_id' => User::where('admin', true)->first()->id,
             ]);
-
-            // Versenyhez karakterek hozzárendelése
-            $contest->characters()->attach($characters->random(), [
-                'hero_hp' => 100, // Kezdeti életerő
-                'enemy_hp' => 100,
-            ]);
-            $contest->characters()->attach($enemyCharacters->random(), [
-                'hero_hp' => 100,
-                'enemy_hp' => 100,
-            ]);
+            for ($i = 0; $i < fake()->numberBetween(1, 5); $i++) {
+                $contest->history = $contest->history . fake()->randomElement(['melee ', 'ranged ', 'magic ']);
+            }
+            if ($contest->win == null) {
+                $contest->characters()->attach($characters->random(), [
+                    'hero_hp' => 20,
+                    'enemy_hp' => 20,
+                ]);
+                $contest->characters()->attach($enemyCharacters->random(), [
+                    'hero_hp' => 20,
+                    'enemy_hp' => 20,
+                ]);
+            } else {
+                $contest->characters()->attach($characters->random(), [
+                    'hero_hp' => 20,
+                    'enemy_hp' => 0,
+                ]);
+                $contest->characters()->attach($enemyCharacters->random(), [
+                    'hero_hp' => 20,
+                    'enemy_hp' => 0,
+                ]);
+            }
         }
     }
 }

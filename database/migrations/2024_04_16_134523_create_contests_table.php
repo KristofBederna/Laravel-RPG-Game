@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('contests', function (Blueprint $table) {
             $table->id();
-            $table->boolean('win');
+            $table->boolean('win')->nullable();
             $table->string('history');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
