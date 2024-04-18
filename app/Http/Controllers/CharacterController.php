@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Character;
 use App\Models\Contest;
 use App\Models\Place;
@@ -22,6 +23,11 @@ class CharacterController extends Controller
     public function show(int $characterId, int $userId)
     {
         $character = Character::get()->where('id', $characterId)->first();
+
+        if (Auth::id() !== $character->user_id && (!Auth::user()->admin && $character->enemy)) {
+            return redirect()->route('characters');
+        }
+
         $contests = $character->contests()->get();
 
         return view('characters_detail', ['character' => $character, 'contests' => $contests]);
@@ -31,12 +37,20 @@ class CharacterController extends Controller
     {
         $character = Character::get()->where('id', $characterId)->first();
 
+        if (Auth::id() !== $character->user_id) {
+            return redirect()->route('characters');
+        }
+
         return view('edit', compact('character'));
     }
 
     public function update(Request $request, $id)
     {
         $character = Character::findOrFail($id);
+
+        if (Auth::id() !== $character->user_id) {
+            return redirect()->route('characters');
+        }
 
         $character->name = $request->input('name');
         $character->defence = $request->input('defence');
@@ -57,6 +71,10 @@ class CharacterController extends Controller
     public function destroy($id)
     {
         $character = Character::findOrFail($id);
+
+        if (Auth::id() !== $character->user_id) {
+            return redirect()->route('characters');
+        }
 
         $character->delete();
 

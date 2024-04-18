@@ -1,5 +1,3 @@
-<!-- resources/views/home.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +11,6 @@
 
     <p>Please login or register to continue:</p>
 
-    <!-- Login form -->
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -32,7 +29,6 @@
 
     <br>
 
-    <!-- Register form -->
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -59,7 +55,6 @@
         <button type="submit">Register</button>
     </form>
 
-    <!-- Statistics -->
     <h2>Statistics</h2>
     <ul>
         <li>Total Characters: {{ $numberOfCharacters }}</li>
