@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Create New Place</h1>
-    <form method="POST" action="{{ route('places.store') }}">
+    <form method="POST" action="{{ route('places.store') }}" enctype="multipart/form-data">
         @csrf
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br><br>

@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Edit Place</h1>
-    <form method="POST" action="{{ route('places.update', $place->id) }}">
+    <form method="POST" action="{{ route('places.update', $place->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <label for="name">Name:</label>

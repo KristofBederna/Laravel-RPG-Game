@@ -19,7 +19,7 @@
             @foreach ($places as $place)
             <tr>
                 <td>{{ $place->name }}</td>
-                <td><img src="{{ asset('storage/' . $place->image) }}" alt="{{ $place->name }}" width="100"></td>
+                <td><img src="{{ asset('images/places/' . $place->image) }}" alt="{{ $place->name }}" width="500"><td>
                 <td>
                     <a href="{{ route('places.edit', $place->id) }}">Edit</a>
                     <form method="POST" action="{{ route('places.destroy', $place->id) }}">

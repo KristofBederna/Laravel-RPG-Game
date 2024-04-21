@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Place;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PlaceController extends Controller
 {
@@ -61,12 +62,20 @@ class PlaceController extends Controller
     if (!Auth::user()->admin) {
       return redirect()->route('characters');
     }
+
     $validatedData = $request->validate([
       'name' => 'required|string|max:255',
       'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     if ($request->hasFile('image')) {
+      if ($place->image) {
+        $imagePath = public_path('images/places/') . $place->image;
+        if (File::exists($imagePath)) {
+          File::delete($imagePath);
+        }
+      }
+
       $imageName = time() . '.' . $request->image->extension();
       $request->image->move(public_path('images/places'), $imageName);
       $place->image = $imageName;
