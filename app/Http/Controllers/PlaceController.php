@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\File;
 
 class PlaceController extends Controller
 {
-  // List all places
   public function index()
   {
     if (!Auth::user()->admin) {
@@ -19,7 +18,6 @@ class PlaceController extends Controller
     return view('places', compact('places'));
   }
 
-  // Show the form for creating a new place
   public function create()
   {
     if (!Auth::user()->admin) {

@@ -21,18 +21,14 @@ class PlaceFactory extends Factory
     {
         $faker = Faker::create();
 
-        // Generate a random word as the image filename
         $imageFilename = $faker->word() . '.jpg';
 
-        // Destination directory for the image
         $destinationPath = public_path('images/places');
 
-        // If the destination directory doesn't exist, create it
         if (!File::exists($destinationPath)) {
             File::makeDirectory($destinationPath, 0755, true);
         }
 
-        // Copy a placeholder image to the destination directory
         $placeholderImagePath = public_path('images/placeholder.jpg');
         $destinationImagePath = $destinationPath . '/' . $imageFilename;
         File::copy($placeholderImagePath, $destinationImagePath);

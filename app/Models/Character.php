@@ -23,7 +23,6 @@ class Character extends Model
         'accuracy',
         'magic',
         'user_id',
-        //a képességpontok (defence, strength, accuracy, magic) összege nem haladhatja meg a 20-at
     ];
 
     public function user(): BelongsTo
