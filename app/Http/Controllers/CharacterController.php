@@ -38,6 +38,9 @@ class CharacterController extends Controller
         $character = Character::get()->where('id', $characterId)->first();
 
         if (Auth::id() !== $character->user_id) {
+            if (Auth::user()->admin && $character->enemy) {
+                return view('edit', compact('character'));
+            }
             return redirect()->route('characters');
         }
 
@@ -49,7 +52,11 @@ class CharacterController extends Controller
         $character = Character::findOrFail($id);
 
         if (Auth::id() !== $character->user_id) {
-            return redirect()->route('characters');
+            if (Auth::user()->admin && $character->enemy) {
+
+            } else {
+                return redirect()->route('characters');
+            }
         }
 
         $character->name = $request->input('name');
@@ -73,7 +80,11 @@ class CharacterController extends Controller
         $character = Character::findOrFail($id);
 
         if (Auth::id() !== $character->user_id) {
-            return redirect()->route('characters');
+            if (Auth::user()->admin && $character->enemy) {
+
+            } else {
+                return redirect()->route('characters');
+            }
         }
 
         $character->delete();

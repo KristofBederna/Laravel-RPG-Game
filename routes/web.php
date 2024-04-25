@@ -35,3 +35,48 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/places/{place}', [PlaceController::class, 'update'])->name('places.update');
     Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
 });
+
+Route::get('/css/styleWelcome.css', function () {
+    $cssPath = resource_path('css/styleWelcome.css');
+
+    if (!file_exists($cssPath)) {
+        abort(404);
+    }
+
+    $css = file_get_contents($cssPath);
+    if ($css === false) {
+        abort(500, 'Failed to read CSS file');
+    }
+
+    return response($css)->header('Content-Type', 'text/css');
+});
+
+Route::get('/css/styleCharacters.css', function () {
+    $cssPath = resource_path('css/styleCharacters.css');
+
+    if (!file_exists($cssPath)) {
+        abort(404);
+    }
+
+    $css = file_get_contents($cssPath);
+    if ($css === false) {
+        abort(500, 'Failed to read CSS file');
+    }
+
+    return response($css)->header('Content-Type', 'text/css');
+});
+
+Route::get('/css/styleCharactersDetail.css', function () {
+    $cssPath = resource_path('css/styleCharactersDetail.css');
+
+    if (!file_exists($cssPath)) {
+        abort(404);
+    }
+
+    $css = file_get_contents($cssPath);
+    if ($css === false) {
+        abort(500, 'Failed to read CSS file');
+    }
+
+    return response($css)->header('Content-Type', 'text/css');
+});
