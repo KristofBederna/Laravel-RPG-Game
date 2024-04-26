@@ -4,24 +4,24 @@
         margin: 0;
         padding: 0;
     }
-    
+
     h1 {
         text-align: center;
         margin-bottom: 20px;
     }
-    
+
     form {
         max-width: 500px;
         margin: 0 auto;
         padding: 20px;
         border: 1px solid #ddd;
     }
-    
+
     label {
         display: block;
         margin-bottom: 5px;
     }
-    
+
     input[type="text"],
     input[type="number"],
     button {
@@ -30,7 +30,7 @@
         margin-bottom: 10px;
         box-sizing: border-box;
     }
-    
+
     button {
   appearance: none;
   background-color: #000000;
@@ -74,23 +74,23 @@ button:active {
 button:hover {
   background-color: #0056b3;
 }
-    
+
     input[type="text"]:focus,
     input[type="number"]:focus {
         outline: none;
         border: 1px solid #4CAF50;
     }
-    
+
     input[type="text"]::placeholder,
     input[type="number"]::placeholder {
         color: #aaa;
     }
-    
+
     input[type="text"]:invalid,
     input[type="number"]:invalid {
         border: 1px solid red;
     }
-    
+
     input[type="text"]:invalid::placeholder,
     input[type="number"]:invalid::placeholder {
         color: red;
@@ -98,7 +98,7 @@ button:hover {
     .dashboardButton {
   width: 10%;
 }
-    
+
     </style>
 <button class="dashboardButton" onclick="window.location.href = '{{ route('dashboard') }}';">Dashboard</button>
 <h1>Edit Character</h1>
@@ -120,6 +120,11 @@ button:hover {
 
     <label for="magic">Magical Ability:</label>
     <input type="number" id="magic" name="magic" value="{{ $character->magic }}" required>
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
     <button type="submit">Save Changes</button>
 </form>

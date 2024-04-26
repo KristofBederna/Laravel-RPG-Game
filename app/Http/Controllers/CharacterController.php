@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Character;
 use App\Models\Contest;
 use App\Models\Place;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class CharacterController extends Controller
 {
@@ -53,7 +56,7 @@ class CharacterController extends Controller
 
         if (Auth::id() !== $character->user_id) {
             if (Auth::user()->admin && $character->enemy) {
-
+                // Admin can update enemy characters
             } else {
                 return redirect()->route('characters');
             }
@@ -70,10 +73,15 @@ class CharacterController extends Controller
             $character->enemy = 1;
         }
 
-        $character->save();
+        if (($character->defence + $character->strength + $character->accuracy + $character->magic) == 20) {
+            $character->save();
+        } else {
+            return redirect()->back()->with('error', 'Stats should sum up to 20!');
+        }
 
         return redirect()->route('characters.show', ['character' => $character->id, 'userId' => $character->user_id]);
     }
+
 
     public function destroy($id)
     {
@@ -96,15 +104,18 @@ class CharacterController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'defence' => 'required|numeric|min:0|max:10',
-            'strength' => 'required|numeric|min:0|max:10',
-            'accuracy' => 'required|numeric|min:0|max:10',
-            'magic' => 'required|numeric|min:0|max:10',
+            'defence' => 'required|numeric|min:0|max:3',
+            'strength' => 'required|numeric|min:0|max:20',
+            'accuracy' => 'required|numeric|min:0|max:20',
+            'magic' => 'required|numeric|min:0|max:20',
             'enemy' => 'boolean',
         ]);
 
+        if ($validatedData['defence'] > 3) {
+            return redirect()->back()->with('error', 'Defence can be maximum 3!');
+        }
         if ($validatedData['defence'] + $validatedData['strength'] + $validatedData['accuracy'] + $validatedData['magic'] !== 20) {
-            return back()->withInput()->withErrors(['sum' => 'The sum of defence, strength, accuracy, and magic must be equal to 20.']);
+            return redirect()->back()->with('error', 'Stats should sum up to 20!');
         }
 
         Character::create([
@@ -125,11 +136,10 @@ class CharacterController extends Controller
         $location = Place::inRandomOrder()->first();
         $opponentCharacter = Character::where('id', '!=', $character->id)->inRandomOrder()->first();
         $opponent = $opponentCharacter->name;
-        $history = $location->name . " vs. " . $opponent;
 
         $contest = Contest::create([
             'win' => null,
-            'history' => $history,
+            'history' => "",
             'user_id' => auth()->user()->id,
             'place_id' => $location->id,
         ]);

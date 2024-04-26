@@ -76,6 +76,11 @@
             <label for="enemy">Enemy:</label>
             <input type="checkbox" id="enemy" name="enemy" value="1">
         @endif
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
         <button type="submit">Create Character</button>
     </form>

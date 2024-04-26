@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Admin',
-            'email' => fake()->unique()->safeEmail,
+            'email' => 'admin@admin.com',
             'password' => bcrypt('adminpassword'),
             'admin' => true,
         ]);
@@ -34,26 +34,27 @@ class DatabaseSeeder extends Seeder
                 'win' => fake()->randomElement([null, 1]),
                 'place_id' => $place->id,
                 'user_id' => User::where('admin', true)->first()->id,
+                'history' => "",
             ]);
             for ($i = 0; $i < fake()->numberBetween(1, 5); $i++) {
-                $contest->history = $contest->history . fake()->randomElement(['melee ', 'ranged ', 'magic ']);
+                $contest->history .= fake()->randomElement(['melee ', 'ranged ', 'magic ']);
             }
             if ($contest->win == null) {
                 $contest->characters()->attach($characters->random(), [
-                    'hero_hp' => 20,
-                    'enemy_hp' => 20,
+                    'hero_hp' => fake()->numberBetween(1,20),
+                    'enemy_hp' => fake()->numberBetween(1,20),
                 ]);
                 $contest->characters()->attach($enemyCharacters->random(), [
-                    'hero_hp' => 20,
-                    'enemy_hp' => 20,
+                    'hero_hp' => fake()->numberBetween(1,20),
+                    'enemy_hp' => fake()->numberBetween(1,20),
                 ]);
             } else {
                 $contest->characters()->attach($characters->random(), [
-                    'hero_hp' => 20,
+                    'hero_hp' => fake()->numberBetween(1,20),
                     'enemy_hp' => 0,
                 ]);
                 $contest->characters()->attach($enemyCharacters->random(), [
-                    'hero_hp' => 20,
+                    'hero_hp' => fake()->numberBetween(1,20),
                     'enemy_hp' => 0,
                 ]);
             }

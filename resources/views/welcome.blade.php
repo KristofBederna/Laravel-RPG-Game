@@ -60,6 +60,15 @@
             <button role="button" type="submit">Register</button>
         </form>
     </div>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     <button id="toggleFormButton" role="button">Switch to Register</button>
 </div>
   </div>
