@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             ]);
             for ($i = 0; $i < fake()->numberBetween(1, 5); $i++) {
                 $contest->history .= fake()->randomElement(['melee ', 'ranged ', 'magic ']);
+                $contest->history .= " - " . fake()->numberBetween(1, 20) . " ";
             }
             if ($contest->win == null) {
                 $contest->characters()->attach($characters->random(), [
@@ -58,6 +59,7 @@ class DatabaseSeeder extends Seeder
                     'enemy_hp' => 0,
                 ]);
             }
+            $contest->save();
         }
     }
 }
